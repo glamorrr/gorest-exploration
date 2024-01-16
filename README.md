@@ -3,6 +3,7 @@
 This is a simple project that shows the usage of Next.js.
 
 ## Demo
+![beautify-picture](https://github.com/glamorrr/gorest-exploration/assets/35653840/0ee53b5f-20e0-44a1-9bcb-d97f1495feda)
 
 https://challenge-gorest.vercel.app
 
