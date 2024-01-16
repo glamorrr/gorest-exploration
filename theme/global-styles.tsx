@@ -1,9 +1,6 @@
-import { useTheme } from '@emotion/react';
 import { GlobalStyles as MUIGlobalStyles } from '@mui/material';
 
 export default function GlobalStyles() {
-  const theme = useTheme();
-
   return (
     <MUIGlobalStyles
       styles={{
