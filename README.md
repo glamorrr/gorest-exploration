@@ -16,6 +16,17 @@ https://challenge-gorest.vercel.app
    npm run dev
    ```
 
+## Code Information
+
+1. components -> components
+2. config -> configuration and constants
+3. layout -> page layout
+4. modules -> API calls for blog and user endpoint
+5. pages -> pages
+6. section -> small parts of a page
+7. theme -> custom Material UI theme
+8. utils -> supporting functions
+
 ## Tools
 
 - Next.js
