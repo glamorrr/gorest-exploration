@@ -7,7 +7,7 @@ import { config } from '@/config/index';
 
 export default function BlogList() {
   const router = useRouter();
-  const page = Number(router.query.page);
+  const page = router.query.page ? Number(router.query.page) : 1;
   const { data: posts, isFetching, isError } = useGetPosts({ page });
 
   if (isError) {

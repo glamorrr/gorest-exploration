@@ -4,7 +4,7 @@ import { Iconify } from '@/components/iconify';
 
 export default function BlogPagination() {
   const router = useRouter();
-  const page = Number(router.query.page);
+  const page = router.query.page ? Number(router.query.page) : 1;
 
   const nextPage = () => {
     router.push({
@@ -15,9 +15,10 @@ export default function BlogPagination() {
   };
 
   const prevPage = () => {
+    const prevPage = page - 1;
     router.push({
       query: {
-        page: String(page - 1),
+        ...(prevPage !== 1 && { page: String(prevPage) }),
       },
     });
   };

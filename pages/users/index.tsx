@@ -1,8 +1,6 @@
 import Typography from '@mui/material/Typography';
 import { DefaultLayout } from '@/layouts/index';
 import { Page } from '@/components/page';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { UserList, UserPagination, UserFilter } from '@/sections/user';
 import { Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 import NextLink from 'next/link';
@@ -12,24 +10,7 @@ UserListPage.getLayout = (page: React.ReactElement) => <DefaultLayout>{page}</De
 
 export default function UserListPage() {
   const theme = useTheme();
-  const router = useRouter();
-  const page = Number(router.query.page);
   const smUp = useMediaQuery(theme.breakpoints.up('sm'));
-
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    if (Number.isNaN(page)) {
-      router.replace({
-        query: {
-          name: '',
-          status: '',
-          page: '1',
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
 
   return (
     <Page title="Users">

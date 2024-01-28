@@ -7,7 +7,7 @@ import { SkeletonUserCard } from '@/components/user';
 
 export default function UserList() {
   const router = useRouter();
-  const page = Number(router.query.page);
+  const page = router.query.page ? Number(router.query.page) : 1;
   const { name = '', status = '' } = router.query;
   let {
     data: users,
@@ -15,8 +15,8 @@ export default function UserList() {
     isError,
   } = useGetUsers({
     page,
-    name: name as string,
-    status: status as string,
+    ...(name && { name: name as string }),
+    ...(status && { status: status as string }),
   });
 
   if (isError) {

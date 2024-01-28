@@ -2,8 +2,7 @@ import { fetcher } from '@/utils/fetcher';
 import { CreateUser, Params, UpdateUser, User } from './enitities';
 import { config } from '@/config/index';
 
-export const getUsers = async ({ page = 1, name, status }: Params): Promise<User[] | null> => {
-  if (Number.isNaN(page)) return null;
+export const getUsers = async ({ page = 1, name, status }: Params): Promise<User[]> => {
   const res = await fetcher.get<User[]>('/users', {
     params: {
       page,
@@ -15,8 +14,7 @@ export const getUsers = async ({ page = 1, name, status }: Params): Promise<User
   return res.data;
 };
 
-export const getUser = async (id: number): Promise<User | null> => {
-  if (Number.isNaN(id)) return null;
+export const getUser = async (id: number): Promise<User> => {
   const res = await fetcher.get<User>(`/users/${id}`);
   return res.data;
 };

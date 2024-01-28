@@ -6,11 +6,11 @@ import { Iconify } from '@/components/iconify';
 export default function UserPagination() {
   const router = useRouter();
   const { name, status } = router.query;
-  const page = Number(router.query.page);
+  const page = router.query.page ? Number(router.query.page) : 1;
   let { data: users } = useGetUsers({
     page,
-    name: name as string,
-    status: status as string,
+    ...(status && { status: status as string }),
+    ...(name && { name: name as string }),
   });
 
   const nextPage = () => {
@@ -23,10 +23,12 @@ export default function UserPagination() {
   };
 
   const prevPage = () => {
+    const prevPage = page - 1;
     router.push({
       query: {
-        ...router.query,
-        page: String(page - 1),
+        ...(status && { status }),
+        ...(name && { name }),
+        ...(prevPage !== 1 && { page: String(prevPage) }),
       },
     });
   };

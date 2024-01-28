@@ -3,8 +3,7 @@ import { Post } from './enitities';
 import { PaginateParams } from '../common/types';
 import { config } from '@/config/index';
 
-export const getPosts = async ({ page = 1 }: PaginateParams): Promise<Post[] | null> => {
-  if (Number.isNaN(page)) return null;
+export const getPosts = async ({ page = 1 }: PaginateParams): Promise<Post[]> => {
   const res = await fetcher.get<Post[]>('/posts', {
     params: {
       page,
@@ -14,8 +13,7 @@ export const getPosts = async ({ page = 1 }: PaginateParams): Promise<Post[] | n
   return res.data;
 };
 
-export const getPost = async (id: number): Promise<Post | null> => {
-  if (Number.isNaN(id)) return null;
+export const getPost = async (id: number): Promise<Post> => {
   const res = await fetcher.get<Post>(`/posts/${id}`);
   return res.data;
 };

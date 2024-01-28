@@ -5,21 +5,18 @@ import { STATUS_FILTER } from '@/config/index';
 
 export default function UserFilter() {
   const router = useRouter();
-  const { name = '', status = '' } = router.query;
-  const [filterName, setFilterName] = useState(name);
-  const selectedStatus = STATUS_FILTER.find(({ value }) => value === status);
+  const [filterName, setFilterName] = useState(router.query.name);
+  const selectedStatus = STATUS_FILTER.find(({ value }) => value === (router.query.status || ''));
 
   useEffect(() => {
     if (!router.isReady) return;
-    setFilterName(name);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [name]);
+    setFilterName(router.query.name);
+  }, [router.isReady, router.query.name]);
 
   const handleChangeStatus = (status: string) => {
     router.push({
       query: {
-        ...router.query,
-        page: '1',
+        name: filterName,
         status,
       },
     });
@@ -30,19 +27,20 @@ export default function UserFilter() {
   };
 
   useEffect(() => {
+    if (!router.isReady) return;
+    if (filterName === router.query.name) return;
+
     const delay = setTimeout(() => {
       router.push({
         query: {
-          ...router.query,
-          page: '1',
-          name: filterName,
+          ...(router.query.status && { status: router.query.status }),
+          ...(filterName && { name: filterName }),
         },
       });
     }, 500);
 
     return () => clearTimeout(delay);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterName]);
+  }, [filterName, router]);
 
   return (
     <Stack
