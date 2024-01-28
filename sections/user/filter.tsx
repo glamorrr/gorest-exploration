@@ -2,16 +2,18 @@ import { useRouter } from 'next/router';
 import { FormControl, InputLabel, MenuItem, OutlinedInput, Select, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { STATUS_FILTER } from '@/config/index';
+import Router from 'next/router';
 
 export default function UserFilter() {
   const router = useRouter();
-  const [filterName, setFilterName] = useState(router.query.name);
-  const selectedStatus = STATUS_FILTER.find(({ value }) => value === (router.query.status || ''));
+  const { name = '', status = '' } = router.query;
+  const [filterName, setFilterName] = useState(name);
+  const selectedStatus = STATUS_FILTER.find(({ value }) => value === status);
 
   useEffect(() => {
     if (!router.isReady) return;
-    setFilterName(router.query.name);
-  }, [router.isReady, router.query.name]);
+    setFilterName(name);
+  }, [router.isReady, name]);
 
   const handleChangeStatus = (status: string) => {
     router.push({
@@ -27,20 +29,19 @@ export default function UserFilter() {
   };
 
   useEffect(() => {
-    if (!router.isReady) return;
-    if (filterName === router.query.name) return;
+    if (filterName === name) return;
 
     const delay = setTimeout(() => {
-      router.push({
+      Router.push({
         query: {
-          ...(router.query.status && { status: router.query.status }),
+          ...(status && { status }),
           ...(filterName && { name: filterName }),
         },
       });
     }, 500);
 
     return () => clearTimeout(delay);
-  }, [filterName, router]);
+  }, [filterName, name, status]);
 
   return (
     <Stack
